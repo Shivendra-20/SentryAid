@@ -23,12 +23,19 @@ export const env = {
     process.env.CLIENT_ORIGIN ??
       (isProduction ? "*" : defaultOrigins.join(","))
   ),
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "30d",
 };
 
 export function assertEnv() {
   if (!env.mongoUri) {
     throw new Error(
       "MONGO_URI is missing. Copy backend/.env.example to backend/.env and set your MongoDB connection string."
+    );
+  }
+  if (!env.jwtSecret || env.jwtSecret === "your-256-bit-secret") {
+    throw new Error(
+      "JWT_SECRET is missing or still the placeholder. Set a strong secret in backend/.env"
     );
   }
 }

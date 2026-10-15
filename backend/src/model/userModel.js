@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { hashPassword } from "../utils/password.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -47,6 +48,12 @@ const userSchema = new mongoose.Schema(
     timestamps: true, // Automatically adds createdAt & updatedAt
   }
 );
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await hashPassword(this.password);
+  next();
+});
 
 const User = mongoose.model("User", userSchema);
 

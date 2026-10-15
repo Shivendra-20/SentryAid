@@ -6,8 +6,11 @@ import {
   updateMessage,
   markAsReadByVolunteer
 } from "../controllers/messageController.js";
+import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router.get("/", getAllMessage);
 router.post("/", createMessage);

@@ -33,6 +33,7 @@ const UserLogin = () => {
 
       // Save to localStorage
       localStorage.setItem("user", JSON.stringify(res.data));
+      localStorage.setItem("token", res.data.token);
 
       // Show success message
       toast.success("Login successful! 🎉");

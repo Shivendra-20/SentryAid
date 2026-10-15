@@ -10,8 +10,11 @@ import {
   updateReportStatus,
   deleteReport
 } from "../controllers/reportController.js";
+import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
+
+router.use(authenticate);
 
 // Create a new report
 router.post("/", createReport);

@@ -30,6 +30,7 @@ const VolunteerLogin = () => {
 
       // Save to localStorage
       localStorage.setItem("volunteer", JSON.stringify(res.data));
+      localStorage.setItem("token", res.data.token);
 
       // Show success message
       toast.success("Login successful! 🎉");

@@ -12,16 +12,19 @@ const Navbar = () => {
 
   const handleVolunteerLogout = () => {
     localStorage.removeItem("volunteer");
+    localStorage.removeItem("token");
     navigate("/"); // Redirect to home page
   };
 
   const handleAdminLogout = () => {
     localStorage.removeItem("admin");
+    localStorage.removeItem("token");
     navigate("/"); // Redirect to home page
   };
 
   const handleUserLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/"); // Redirect to home page
   };
 

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { hashPassword } from "../utils/password.js";
 
 const volunteerSchema = new mongoose.Schema(
   {
@@ -55,6 +56,12 @@ const volunteerSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+volunteerSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await hashPassword(this.password);
+  next();
+});
 
 const Volunteer = mongoose.model("Volunteer", volunteerSchema);
 

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
+import jwt from "jsonwebtoken";
 
 // Config & DB
 import { env, assertEnv } from "./config/env.js";
@@ -54,6 +55,19 @@ const socketCors =
     : { origin: env.clientOrigin, credentials: true };
 
 const io = new Server(server, { cors: socketCors });
+
+// Reject socket connections without a valid JWT
+io.use((socket, next) => {
+  const token = socket.handshake.auth?.token;
+  if (!token) return next(new Error("Authentication required"));
+  try {
+    const payload = jwt.verify(token, env.jwtSecret);
+    socket.data.user = { id: payload.id, type: payload.type };
+    next();
+  } catch (error) {
+    next(new Error("Invalid or expired token"));
+  }
+});
 
 // ========== SOCKET.IO ==========
 

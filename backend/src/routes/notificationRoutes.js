@@ -5,8 +5,11 @@ import {
   markAsRead,
   markAllAsRead
 } from "../controllers/notificationController.js";
+import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router.post("/", createNotification);
 router.get("/user/:userId", getUserNotifications);

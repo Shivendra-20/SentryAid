@@ -15,7 +15,9 @@ export async function runDevSeed() {
 
   const adminCount = await Admin.countDocuments();
   if (adminCount === 0) {
-    await Admin.create({ name: "admin", password: "admin123" });
-    console.log("✅ Dev admin created → login: admin / admin123");
+    const initialPassword =
+      process.env.ADMIN_INITIAL_PASSWORD || "admin123";
+    await Admin.create({ name: "admin", password: initialPassword });
+    console.log("✅ Dev admin created → login: admin / <ADMIN_INITIAL_PASSWORD>");
   }
 }

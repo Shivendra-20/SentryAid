@@ -55,6 +55,7 @@ const AdminLogin = () => {
       });
 
       localStorage.setItem("admin", JSON.stringify(res.data));
+      localStorage.setItem("token", res.data.token);
       setRole(res.data); // triggers dashboard logic
 
       navigate(`/admin`);
