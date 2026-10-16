@@ -38,7 +38,24 @@ npm run dev
 
 Then open http://localhost:5173/
 
-In local dev, signups are auto-approved so you can log in right after registering. The default admin (if none exists) is `admin` / `admin123` at `/adminLogin`.
+In local dev, signups are auto-approved so you can log in right after registering.
+
+## Demo accounts (local dev)
+
+The dev seed (`backend/src/config/devSeed.js`) creates these accounts on startup and keeps their passwords in sync, so they always work:
+
+| Role | Name | Password | Login page |
+| --- | --- | --- | --- |
+| Admin *(only one admin ever exists)* | `admin` | `1234` | http://localhost:5173/adminLogin |
+| User | `user1` | `1234` | http://localhost:5173/usersLogin |
+| Volunteer | `v1` | `1234` | http://localhost:5173/volunteerLogin |
+
+Notes:
+
+- The seed never creates a second admin — if an admin already exists under another name, it is left alone.
+- `user1` and `v1` are seeded with `request: "accepted"` (and `status: "active"` for the volunteer) so login isn't blocked by the approval flow.
+- Override the demo password with `DEMO_PASSWORD` in `backend/.env` if you want something else.
+- Seeds run only when `NODE_ENV` is not `production`.
 
 Run services separately if needed:
 
